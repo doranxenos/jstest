@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html>
+  <head>
+    <title>Test JSTest</title>
+
+    <script type='text/javascript' src='../src/JSTest.js'></script>
+    <script type='text/javascript' src='../src/Suite.js'></script>
+		<script type='text/javascript' src='../src/Result.js'></script>
+		<script type='text/javascript' src='../src/Viewer.js'></script>
+		<script type='text/javascript' src='../src/ConsoleViewer.js'></script>
+
+  </head>
+
+  <body>
+    <div id='canvas'></div>
+
+    <script type='text/javascript'>
+      
+			var suite = new JSTest.Suite([
+
+			  function testIsNull() { JSTest.isNull(null); },
+
+			  function testIsNotNull() { JSTest.isNotNull({}); },
+
+			  function testIsUndefined() { JSTest.isUndefined(undefined); },
+
+			  function testIsDefined() { JSTest.isDefined({}); },
+
+			  function testIsTrue() { JSTest.isTrue(true); },
+
+			  function testIsFalse() { JSTest.isFalse(false); },
+
+			  function testAreEqual() { JSTest.areEqual("10", "10"); }
+
+			], {
+			  buildUp: function() { console.debug("buildUp"); },
+			  tearDown: function() { console.debug("tearDown"); }
+			});
+
+			suite.viewer(new JSTest.ConsoleViewer());
+
+			suite.run();
+
+    </script>
+
+  </body>
+
+</html>

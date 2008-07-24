@@ -1,0 +1,3 @@
+JSTest.Viewer = function() {
+
+};

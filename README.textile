@@ -1,0 +1,11 @@
+h2. JSTest: Simple JavaScript Unit Testing Library
+
+*Version: 0.0.1*
+
+*Author: Ben Rose (doranxenos@gmail.com)*
+
+*License: MIT License*
+
+JSTest is a simple JavaScript Unit Testing Library which doesn't depend on any external libraries.  
+
+JSTest works on the basis of Test Suites and has a modular design which supports easy extensions to its functionality.  It has a default console based output viewer but easily supports the addition of any other types of viewer.
