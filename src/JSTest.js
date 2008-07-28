@@ -10,42 +10,47 @@ var JSTest = {
 
 	isNull: function(exp, suite) {
 		if(exp !== null)
-			throw new JSTest.Error("Not Null");
+			throw new Error(exp +" is not null");
 	},
 
 	isNotNull: function(exp, suite) {
 		if(exp === null)
-			throw new JSTest.Error("Not Null");
+			throw new Error(exp +" is null");
 	},
 
 	isUndefined: function(exp) {
 		if(exp !== undefined)
-			throw new JSTest.Error("Not Undefined");
+			throw new Error(exp +" is defined");
 	},
 
 	isDefined: function(exp) {
 		if(exp === undefined)
-			throw new JSTest.Error("Not Undefined");
+			throw new Error(exp +" is undefined");
 	},
 
 	isTrue: function(exp) {
-		if(exp !== true)
-			throw new JSTest.Error("Not True");
+		JSTest.areEqual(true, exp);
 	},
 
 	isFalse: function(exp) {
-		if(exp !== false)
-			throw new JSTest.Error("Not False");
+		JSTest.areEqual(false, exp);
 	},
 
 	areEqual: function(expected, actual) {
 		if(expected != actual)
-			throw new JSTest.Error("Not Equal");
+			throw new Error("Expected: "+expected +", Actual: "+ actual);
+	},
+
+	/*
+	 * Utility Functions
+	 */
+
+	getDomNode: function() {
+		if(!JSTest.domNode) {
+			JSTest.domNode = document.createElement('div');
+			document.body.appendChild(JSTest.domNode);
+		}
+		return JSTest.domNode;
 	}
 
 };
-
-JSTest.Error = function() {
-
-};
-JSTest.Error.prototype = new Error;

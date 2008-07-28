@@ -36,11 +36,11 @@ JSTest.Suite.prototype = {
 		for(var i=0; i<t.length; i++) {
 			try {
 				if(typeof t[i] == 'function') {
-					var r = t[i]();
+					var r = t[i].apply(this);
 					result.add(t[i], true);
 				}
 			} catch(e) {
-				result.add(t[i], false, e);
+				result.add(t[i], false, e.message);
 			}
 		}
 
