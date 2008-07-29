@@ -1,5 +1,8 @@
 var JSTest = {
 
+	_suites: [],
+	_viewer: null,
+
 	Version: 0.1,
 
 	DefaultViewer: "ConsoleViewer",
@@ -45,12 +48,34 @@ var JSTest = {
 	 * Utility Functions
 	 */
 
+	viewer: function(v) {
+		if(v instanceof JSTest.Viewer)
+			this._viewer = v;
+
+		if(!this._viewer)
+			this._viewer = new JSTest[this.DefaultViewer]();
+
+		return this._viewer;
+	},
+
 	getDomNode: function() {
 		if(!JSTest.domNode) {
 			JSTest.domNode = document.createElement('div');
 			document.body.appendChild(JSTest.domNode);
 		}
 		return JSTest.domNode;
+	},
+
+	register: function(suite) {
+		this._suites.push(suite);
+	},
+
+	run: function() {
+		this.viewer().printJSTestHeader();
+
+		var l = this._suites.length;
+		for(var i=0; i<l; i++)
+			this._suites[i].run();
 	}
 
 };

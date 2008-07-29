@@ -1,18 +1,24 @@
-JSTest.Suite = function(tests, options) {
+JSTest.Suite = function(name, tests, options) {
 	options = options ? options : {};
 	this._tests = [];
+
+	this.name(name);
 	this.tests(tests);
 
 	this._buildUp = options.buildUp;
 	this._tearDown = options.tearDown;
-
-	this.viewer(options.viewer);
 };
 
 JSTest.Suite.prototype = {
 
+	_name: null,
 	_tests: null,
-	_viewer: null,
+
+	name: function(n) {
+		if(typeof n == 'string')
+			this._name = n;
+		return this._name;
+	},
 
 	tests: function(tests) {
 		if(tests instanceof Array)
@@ -20,15 +26,11 @@ JSTest.Suite.prototype = {
 		return this._tests;
 	},
 
-	viewer: function(viewer) {
-		if(viewer instanceof JSTest.Viewer)
-			this._viewer = viewer;
-		return this._viewer;
-	},
-
 	run: function() {
 		var t = this.tests();
-		var result = new JSTest.Result(this.viewer());
+		var result = new JSTest.Result();
+
+		JSTest.viewer().printSuiteHeader(this);
 
 		if(typeof this._buildUp == 'function')
 			this._buildUp();
@@ -47,8 +49,7 @@ JSTest.Suite.prototype = {
 		if(typeof this._tearDown == 'function')
 			this._tearDown();
 
-		if(this.viewer() instanceof JSTest.Viewer)
-			this.viewer().printSummary(result);
+		JSTest.viewer().printSummary(result);
 
 		return result;
 	}

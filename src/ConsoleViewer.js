@@ -4,6 +4,18 @@ JSTest.ConsoleViewer = function() {
 };
 JSTest.ConsoleViewer.prototype = new JSTest.Viewer;
 
+JSTest.ConsoleViewer.prototype.printJSTestHeader = function() {
+	console.debug("Running registered JSTest Suites...");
+};
+
+JSTest.ConsoleViewer.prototype.printSuiteHeader = function(suite) {
+	console.debug(" ");
+	console.debug("--------------------------------------------------------");
+	console.debug("Running Suite: "+suite.name());
+	console.debug("--------------------------------------------------------");
+	console.debug(" ");
+};
+
 JSTest.ConsoleViewer.prototype.displayTestResult = function(test, pass, message) {
 	if(pass) {
 			this._passCnt++;
