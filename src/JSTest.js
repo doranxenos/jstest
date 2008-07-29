@@ -48,6 +48,15 @@ var JSTest = {
 	 * Utility Functions
 	 */
 
+	suites: function(s) {
+		if(s instanceof Array) {
+			this.clear();
+			for(var i=0; i<s.length; i++)
+				this.register(s[i]);
+		}
+		return this._suites;
+	},
+
 	viewer: function(v) {
 		if(v instanceof JSTest.Viewer)
 			this._viewer = v;
@@ -70,12 +79,32 @@ var JSTest = {
 		this._suites.push(suite);
 	},
 
+	deregister: function(suite) {
+		var l = this._suites.length;
+		var idx = -1;
+		for(var i=0; i<l; i++) {
+			if(this._suites[i] == suite) {
+				idx = i;
+				break;
+			}
+		}
+		if(idx >= 0)
+			this._suites.splice(idx, 1);
+	},
+
+	clear: function() {
+		while(this._suites.length)
+			this.deregister(this._suites[0]);
+	},
+
 	run: function() {
 		this.viewer().printJSTestHeader();
 
 		var l = this._suites.length;
 		for(var i=0; i<l; i++)
 			this._suites[i].run();
+
+		this.viewer().printJSTestSummary();
 	}
 
 };

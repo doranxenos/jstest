@@ -13,29 +13,39 @@ JSTest.ConsoleViewer.prototype.printSuiteHeader = function(suite) {
 	console.debug("--------------------------------------------------------");
 	console.debug("Running Suite: "+suite.name());
 	console.debug("--------------------------------------------------------");
-	console.debug(" ");
 };
 
 JSTest.ConsoleViewer.prototype.displayTestResult = function(test, pass, message) {
 	if(pass) {
-			this._passCnt++;
 			console.debug("Passed Test "+test.name + (message ? ": "+message : ""));
 		} else {
-			this._failCnt++;
 			console.error("Failed Test "+test.name + (message ? ": "+message : ""));
 		}
 };
 
-JSTest.ConsoleViewer.prototype.printSummary = function(result) {
+JSTest.ConsoleViewer.prototype.printJSTestSummary = function() {
 	console.debug(" ");
+	console.debug("Finished running "+ JSTest.suites().length +" Test Suites:");
+	var msg = "Failed "+this._failCnt+" suites, Passed "+this._passCnt+" suites";
+
+	if(this._failCnt)
+		console.error(msg);
+	else
+		console.debug(msg);
+};
+
+JSTest.ConsoleViewer.prototype.printSuiteSummary = function(result) {
 	console.debug("--------------------------------------------------------");
-	console.debug(" ");
+	var msg = "Failed "+result.failCnt+" tests, Passed "+result.passCnt+" tests";
 
-	var msg = "Failed "+this._failCnt+" tests, Passed "+this._passCnt+" tests";
-
-	if(this._failCnt) {
+	if(result.failCnt) {
+		this._failCnt++;
 		console.error(msg);
 	} else {
+		this._passCnt++;
 		console.debug(msg);
 	}
+
+	console.debug("--------------------------------------------------------");
 };
+

@@ -49,7 +49,7 @@ JSTest.Suite.prototype = {
 		if(typeof this._tearDown == 'function')
 			this._tearDown();
 
-		JSTest.viewer().printSummary(result);
+		JSTest.viewer().printSuiteSummary(result);
 
 		return result;
 	}
